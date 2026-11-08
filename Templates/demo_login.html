@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mode Demo - Saintek Overflow</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<main class="container narrow">
+    <header class="site-header">
+        <h1>SAINTEK OVERFLOW</h1>
+        <p>Platform tanya jawab akademik mahasiswa</p>
+    </header>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="message {{ category }}">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    <section class="panel">
+        <h2>Masuk ke Mode Demo</h2>
+        <p class="muted">Login ini hanya simulasi agar fitur FR-02 dapat diuji secara mandiri.</p>
+        <form method="POST" action="{{ url_for('demo_login') }}">
+            <label for="student_name">Nama mahasiswa</label>
+            <input id="student_name" name="student_name" maxlength="100"
+                   placeholder="Contoh: Ulil" required>
+            <button type="submit">Masuk ke Demo</button>
+        </form>
+    </section>
+</main>
+</body>
+</html>
