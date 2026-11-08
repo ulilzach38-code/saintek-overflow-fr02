@@ -326,9 +326,9 @@ Nama anggota kelompok:
 |No|Nama Anggota|Kontribusi|
 |-|-|-|
 |1|Ulil Amrizach Ahmad|Implementasi keseluruhan FR-02, pengembangan backend Python Flask, pembuatan database MySQL, pengembangan frontend, integrasi sistem, pengujian program, refactoring, dan dokumentasi proyek.|
-|2|Zahratunnida Ayudi||
-|3|Nafisyatul Nur Azahra||
-|4|Muhammad Hanif Ihsanullah||
+|2|Zahratunnida Ayudi|integrasi sistem|
+|3|Nafisyatul Nur Azahra|pengembangan frontend|
+|4|Muhammad Hanif Ihsanullah|pengembangan backend Python Flask|
 
 
 
