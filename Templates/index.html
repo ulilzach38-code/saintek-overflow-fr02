@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajukan Pertanyaan - Saintek Overflow</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<main class="container">
+    <header class="site-header header-row">
+        <div>
+            <h1>SAINTEK OVERFLOW</h1>
+            <p>Forum diskusi dan tanya jawab akademik</p>
+        </div>
+        <div class="user-area">
+            <span>Mode demo: {{ student_name }}</span>
+            <a href="{{ url_for('logout') }}">Keluar</a>
+        </div>
+    </header>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="message {{ category }}">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    <section class="panel">
+        <h2>Ajukan Pertanyaan</h2>
+        <p class="muted">Tuliskan pertanyaan akademik agar mahasiswa lain dapat membantu.</p>
+
+        <form method="POST" action="{{ url_for('submit') }}">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+
+            <label for="title">Judul pertanyaan <span>*</span></label>
+            <input id="title" name="title" type="text" maxlength="150"
+                   placeholder="Contoh: Bagaimana cara memahami konsep rekursi?"
+                   required>
+
+            <label for="description">Deskripsi pertanyaan <span>*</span></label>
+            <textarea id="description" name="description" rows="6" maxlength="5000"
+                      placeholder="Jelaskan masalah atau materi yang ingin ditanyakan..."
+                      required></textarea>
+
+            <label for="category_id">Kategori <span>*</span></label>
+            <select id="category_id" name="category_id" required>
+                <option value="">-- Pilih kategori --</option>
+                {% for category in categories %}
+                    <option value="{{ category.category_id }}">{{ category.category_name }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="tags">Tag (opsional)</label>
+            <input id="tags" name="tags" type="text" maxlength="255"
+                   placeholder="Contoh: python, algoritma, pemrograman">
+
+            <button type="submit">Kirim Pertanyaan</button>
+        </form>
+    </section>
+
+    <section class="questions-section">
+        <h2>Pertanyaan Terbaru</h2>
+        {% if questions %}
+            {% for question in questions %}
+                <article class="question-card">
+                    <div class="question-meta">
+                        <span>{{ question.category_name }}</span>
+                        <span>Status: {{ question.status }}</span>
+                    </div>
+                    <h3>{{ question.title }}</h3>
+                    <p class="question-description">{{ question.description }}</p>
+                    {% if question.tags %}
+                        <p class="tags">Tag: {{ question.tags }}</p>
+                    {% endif %}
+                    <small>Oleh {{ question.username }} · {{ question.created_at }}</small>
+                </article>
+            {% endfor %}
+        {% else %}
+            <p class="muted">Belum ada pertanyaan. Jadilah yang pertama mengajukan pertanyaan.</p>
+        {% endif %}
+    </section>
+</main>
+</body>
+</html>
